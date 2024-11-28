@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facial Shape Classifier</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        #imagePreview {
+            display: none; /* Hidden by default */
+            max-width: 100%; /* Responsive width */
+            max-height: 300px; /* Maximum height */
+            margin-top: 1rem; /* Spacing from the input */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen p-6">
+    <div class="w-full max-w-md mx-auto">
+        <h2 class="text-2xl font-bold text-center text-gray-700 mb-8">Upload Your Image</h2>
+        <form action="/upload" method="post" enctype="multipart/form-data" class="bg-white shadow-lg rounded-lg px-8 pt-6 pb-8 mb-4">
+            <div class="mb-4">
+                <input type="file" id="image" name="image" required="required" onchange="previewImage()" class="block w-full text-sm text-gray-700 py-2 px-3 border border-gray-300 rounded-md">
+                <img id="imagePreview" alt="Image preview" class="rounded-md mx-auto"/>
+            </div>
+            <div class="mb-6">
+                <label for="event_type" class="block text-gray-700 text-sm font-bold mb-2">Event Option:</label>
+                <select name="event_type" id="event_type" onchange="toggleAgeOptions()" class="block w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                    <option value="">Select Event Option</option>
+                    <option value="งานมงคล (ทำบุญ, งานบวช)">งานมงคล (ทำบุญ, งานบวช)</option>
+                    <option value="งานอวมงคล (งานศพ)">งานอวมงคล (งานศพ)</option>
+                    <option value="งานเลี้ยงกลางคืน">งานเลี้ยงกลางคืน</option>
+                    <option value="งานแต่ง (เจ้าสาว)">งานแต่ง (เจ้าสาว)</option>
+                    <option value="สัมภาษณ์งาน">สัมภาษณ์งาน</option>
+                </select>
+            </div>
+
+            <div class="mb-6 hidden" id="age_option">
+                <label for="age" class="block text-gray-700 text-sm font-bold mb-2">Age:</label>
+                <select name="age" id="age" class="block w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                    <option value="15-59">15 - 59 ปี</option>
+                    <option value="60">60 ปีขึ้นไป</option>
+                </select>
+            </div>
+
+            <div class="mb-6" id="thai_dress_option" style="display: none;">
+                <label class="flex items-center">
+                    <input type="checkbox" name="thai_dress" value="Yes" class="form-checkbox h-5 w-5 text-gray-600">
+                    <span class="ml-2 text-gray-700">ชุดไทย</span>
+                </label>
+            </div>
+            <div class="mb-6">
+                <input type="submit" value="Submit" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function toggleAgeOptions() {
+            var eventType = document.getElementById('event_type').value;
+            var ageOption = document.getElementById('age_option');
+            if (['งานมงคล (ทำบุญ, งานบวช)', 'งานเลี้ยงกลางคืน'].includes(eventType)) {
+                ageOption.classList.remove('hidden');
+            } else {
+                ageOption.classList.add('hidden');
+            }
+            checkEvent(); // Call this function if you want to handle thai dress option visibility as well
+        }
+        
+        function checkEvent() {
+            var eventType = document.getElementById('event_type').value;
+            var thaiDressOption = document.getElementById('thai_dress_option');
+            if (eventType === 'งานแต่ง (เจ้าสาว)') {
+                thaiDressOption.style.display = 'block';
+            } else {
+                thaiDressOption.style.display = 'none';
+            }
+        }
+
+        function previewImage() {
+            var preview = document.getElementById('imagePreview');
+            var file = document.getElementById('image').files[0];
+            var reader = new FileReader();
+
+            reader.onloadend = function () {
+                preview.src = reader.result;
+                preview.style.display = 'block';
+            }
+
+            if (file) {
+                reader.readAsDataURL(file);
+            } else {
+                preview.src = '';
+                preview.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

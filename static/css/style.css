@@ -1,0 +1,57 @@
+/* style.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f8f8;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.input-section {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.image-upload,
+.selectors {
+    flex-basis: 48%;
+}
+
+.image-upload form,
+.selectors form {
+    margin-bottom: 20px;
+}
+
+.image-upload img {
+    width: 100%; /* Adjust as necessary */
+    margin-top: 20px;
+}
+
+.selectors label,
+.selectors input,
+.selectors select {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.output-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.output-section img {
+    width: 100%; /* Adjust as necessary */
+    margin-top: 20px;
+    max-width: 250px; /* Adjust as necessary */
+}
